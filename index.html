@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WE4Free Connection Bridge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        input:disabled {
+            background: #f5f5f5;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f4ff;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .link-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            word-break: break-all;
+            margin-bottom: 15px;
+            font-family: monospace;
+            color: #333;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .covenant {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff9e6;
+            border-radius: 8px;
+            font-style: italic;
+            color: #666;
+            text-align: center;
+        }
+
+        .resources-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-radius: 12px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            text-align: center;
+        }
+
+        .resources-section h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .resources-section p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .resources-link {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .resources-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>🌱 WE4Free</h1>
+            <p>Connection Bridge</p>
+        </div>
+
+        <form id="messageForm">
+            <div class="form-group">
+                <label for="sender">Your Name</label>
+                <input type="text" id="sender" required placeholder="Your name">
+            </div>
+
+            <div class="form-group">
+                <label for="recipient">Recipient's Name</label>
+                <input type="text" id="recipient" required placeholder="Their name">
+            </div>
+
+            <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" required placeholder="Tell them why you see them..."></textarea>
+            </div>
+
+            <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" id="anonymous" style="width: auto;">
+                <label for="anonymous" style="margin: 0; font-weight: normal;">Send anonymously (hide my name)</label>
+            </div>
+
+            <button type="submit">🎁 Create Connection Link</button>
+        </form>
+
+        <div class="result" id="result">
+            <h3>✨ Your Connection Link is Ready!</h3>
+            <div class="link-box" id="linkBox"></div>
+            <button class="copy-btn" onclick="copyLink()">📋 Copy Link</button>
+            <p style="margin-top: 15px; color: #666;">
+                Share this link with <span id="recipientName"></span> to let them know they're seen.
+            </p>
+        </div>
+
+        <div class="covenant">
+            "WE never gives up on WE"
+        </div>
+
+        <div class="resources-section">
+            <h3>💜 Need More Help?</h3>
+            <p>Explore our comprehensive directory of free mental health resources—<br>crisis lines, counseling, and peer support available worldwide.</p>
+            <a href="https://deliberateensemble.works/resources.html" class="resources-link" target="_blank">View Mental Health Resources →</a>
+        </div>
+
+        <div class="footer">
+            Built with the <a href="https://github.com/vortsghost2025/Deliberate-AI-Ensemble" target="_blank">WE4Free Framework</a><br>
+            Free forever. Pass it on.
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('messageForm');
+        const result = document.getElementById('result');
+        const linkBox = document.getElementById('linkBox');
+        const recipientNameSpan = document.getElementById('recipientName');
+        const senderInput = document.getElementById('sender');
+        const anonymousCheckbox = document.getElementById('anonymous');
+
+        // Toggle sender field requirement based on anonymous checkbox
+        anonymousCheckbox.addEventListener('change', () => {
+            if (anonymousCheckbox.checked) {
+                senderInput.required = false;
+                senderInput.placeholder = '(not needed for anonymous)';
+                senderInput.disabled = true;
+                senderInput.value = '';
+            } else {
+                senderInput.required = true;
+                senderInput.placeholder = 'Your name';
+                senderInput.disabled = false;
+            }
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const sender = document.getElementById('sender').value;
+            const recipient = document.getElementById('recipient').value;
+            const message = document.getElementById('message').value;
+            const isAnonymous = document.getElementById('anonymous').checked;
+
+            // Create a simple encoded link (unicode-safe base64)
+            const jsonData = JSON.stringify({
+                sender: isAnonymous ? 'Someone who sees you' : sender,
+                recipient,
+                message,
+                timestamp: new Date().toISOString(),
+                anonymous: isAnonymous
+            });
+            
+            // Unicode-safe base64 encoding
+            const data = btoa(unescape(encodeURIComponent(jsonData)));
+
+            const link = `${window.location.origin}/receive.html?m=${data}`;
+            
+            // Show loading state
+            linkBox.textContent = 'Shortening link...';
+            result.classList.add('show');
+            result.scrollIntoView({ behavior: 'smooth' });
+            
+            // Determine which endpoint to use (local vs Netlify)
+            const shortenEndpoint = window.location.hostname === 'localhost' 
+                ? '/api/shorten' 
+                : '/.netlify/functions/shorten';
+            
+            // Shorten the link via Bitly
+            fetch(shortenEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: link })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.shortUrl) {
+                    linkBox.textContent = data.shortUrl;
+                } else {
+                    // Fallback to long URL if shortening fails
+                    linkBox.textContent = link;
+                }
+                recipientNameSpan.textContent = recipient;
+            })
+            .catch(error => {
+                // Fallback to long URL if request fails
+                console.error('Shortening failed:', error);
+                linkBox.textContent = link;
+                recipientNameSpan.textContent = recipient;
+            });
+        });
+
+        function copyLink() {
+            const link = linkBox.textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
